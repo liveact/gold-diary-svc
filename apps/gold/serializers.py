@@ -5,7 +5,7 @@ from apps.utils.serializers import SetUserSerializerMixin
 
 
 class GoldSerializer(SetUserSerializerMixin, serializers.ModelSerializer):
-    real_univalent = serializers.DecimalField(
+    actual_univalent = serializers.DecimalField(
         max_digits=12, decimal_places=2, read_only=True
     )
     label_univalent = serializers.DecimalField(
@@ -23,7 +23,12 @@ class GoldSerializer(SetUserSerializerMixin, serializers.ModelSerializer):
             "buy_channel",
             "remark",
             "actual_weight",
-            "real_univalent",
+            "actual_univalent",
             "crit",
             "label_univalent",
         ]
+
+    def update(self, instance, validated_data):
+        instance = super().update(instance, validated_data)
+        instance.refresh_from_db()
+        return instance

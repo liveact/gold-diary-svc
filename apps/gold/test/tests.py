@@ -45,7 +45,7 @@ class GoldTest(BaseAPITestCase):
         self.assertEqual(result["buy_channel"], data["buy_channel"])
         self.assertEqual(result["remark"], data["remark"])
         self.assertEqual(result["actual_weight"], "1.280")
-        self.assertEqual(result["real_univalent"], "351.56")
+        self.assertEqual(result["actual_univalent"], "351.56")
         self.assertEqual(result["label_univalent"], "371.90")
 
     def test_patch_gold(self):
@@ -67,7 +67,7 @@ class GoldTest(BaseAPITestCase):
         self.assertEqual(result["name"], data["name"])
         self.assertEqual(result["label_weight"], "1.250")
         self.assertEqual(result["total_price"], "480.00")
-        self.assertEqual(result["real_univalent"], "375.00")
+        self.assertEqual(result["actual_univalent"], "375.00")
         self.assertEqual(result["label_univalent"], "384.00")
 
     def test_delete_gold(self):

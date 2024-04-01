@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import F
 from model_utils.models import TimeStampedModel, SoftDeletableModel
 
 
@@ -19,6 +20,37 @@ class Gold(SoftDeletableModel, TimeStampedModel):
     actual_weight = models.DecimalField(
         max_digits=12, decimal_places=3, null=True, blank=True, help_text="实际重量"
     )
+
+    actual_univalent = models.GeneratedField(
+        expression=F("total_price") / F("actual_weight"),
+        output_field=models.DecimalField(
+            max_digits=12, decimal_places=2, null=True, blank=True
+        ),
+        db_persist=True,
+        null=True,
+        blank=True,
+    )
+
+    label_univalent = models.GeneratedField(
+        expression=F("total_price") / F("label_weight"),
+        output_field=models.DecimalField(
+            max_digits=12, decimal_places=2, null=True, blank=True
+        ),
+        db_persist=True,
+        null=True,
+        blank=True,
+    )
+
+    crit = models.GeneratedField(
+        expression=F("actual_weight") - F("label_weight"),
+        output_field=models.DecimalField(
+            max_digits=12, decimal_places=3, null=True, blank=True
+        ),
+        db_persist=True,
+        null=True,
+        blank=True,
+    )
+
     user = models.ForeignKey(User, related_name="golds", on_delete=models.DO_NOTHING)
     deleted = models.BooleanField(default=False)
 
@@ -27,21 +59,3 @@ class Gold(SoftDeletableModel, TimeStampedModel):
 
     def __str__(self):
         return f"{self.name}-{self.buy_channel}"
-
-    @property
-    def real_univalent(self):
-        # 实际单价
-        if self.total_price and self.actual_weight:
-            return self.total_price / self.actual_weight
-
-    @property
-    def crit(self):
-        # 暴击
-        if self.actual_weight and self.label_weight:
-            return self.actual_weight - self.label_weight
-
-    @property
-    def label_univalent(self):
-        # 标签单价
-        if self.total_price and self.label_weight:
-            return self.total_price / self.label_weight

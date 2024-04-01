@@ -16,7 +16,7 @@ class BaseAPITestCase(APITestCase):
 
     def test_login(self):
         response = self.client.post(
-            reverse("login"),
+            reverse("api_auth:login"),
             data=json.dumps({"username": "username", "password": "password"}),
             content_type="application/json",
         )

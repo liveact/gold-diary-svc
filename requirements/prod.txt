@@ -1,4 +1,4 @@
 -r base.txt
-gevent==1.4.0
-greenlet==0.4.16
-gunicorn==19.9.0
+gevent==24.2.1
+greenlet==3.0.3
+gunicorn==21.2.0

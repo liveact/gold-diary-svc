@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 
 urlpatterns = [
-    path("api_auth/", include("rest_framework.urls")),
+    path("api_auth/", include("rest_framework.urls", namespace="api_auth")),
     path("api/gold/", include("apps.gold.urls", namespace="gold")),
 ]
 
