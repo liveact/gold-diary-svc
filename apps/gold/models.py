@@ -5,7 +5,8 @@ from model_utils.models import TimeStampedModel, SoftDeletableModel
 
 
 class Gold(SoftDeletableModel, TimeStampedModel):
-    name = models.CharField(max_length=16, null=True, blank=True, help_text="名称")
+    name = models.CharField(max_length=255, null=True, blank=True, help_text="名称")
+    brand = models.CharField(max_length=255, null=True, blank=True, help_text="品牌")
     label_weight = models.DecimalField(
         max_digits=12, decimal_places=3, null=True, blank=True, help_text="标签重量"
     )
